@@ -2,7 +2,7 @@ import json
 import os
 import uuid
 from datetime import datetime
-from board_base import BoardBase
+from base.board_base import BoardBase
 from utils.singletonjson import SingletonJson
 
 
@@ -133,3 +133,48 @@ class BoardManager(BoardBase):
             raise ValueError("Board not found.")
 
         return json.dumps(board["tasks"])
+
+    def create_task(self, request: str) -> str:
+        data = json.loads(request)
+        board_id = data.get('board_id')
+        task_title = data.get('title')
+        task_description = data.get('description')
+        assignee = data.get('assignee')
+
+        # Validation for task data
+        if not board_id or not task_title:
+            return json.dumps({"error": "Board ID and task title are required"})
+
+        # Generate a new task
+        task_id = f"task_{len(self.boards) + 1}"
+        new_task = {
+            "id": task_id,
+            "title": task_title,
+            "description": task_description,
+            "assignee": assignee,
+            "created_at": datetime.now().strftime("%Y-%m-%dT%H:%M:%S"),
+            "status": "open"
+        }
+
+        board = next((b for b in self.boards if b["id"] == board_id), None)
+        if board:
+            board["tasks"].append(new_task)
+            self._save_data()
+            return json.dumps({"task_id": task_id})
+        else:
+            return json.dumps({"error": "Board not found"})
+        
+    def delete_board(self, request: str) -> str:
+        data = json.loads(request)
+        board_id = data.get('id')
+
+        if not board_id:
+            return json.dumps({"error": "Board ID is required"})
+
+        board_index = next((index for index, b in enumerate(self.boards) if b["id"] == board_id), None)
+        if board_index is not None:
+            del self.boards[board_index]
+            self._save_data()
+            return json.dumps({"message": f"Board {board_id} deleted successfully"})
+        else:
+            return json.dumps({"error": "Board not found"})

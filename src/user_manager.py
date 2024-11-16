@@ -63,3 +63,5 @@ class UserManager(UserBase):
         self.storage.update_data(users)
         return json.dumps({"status": "success"})
         
+    def get_user_teams(self, request: str) -> str:
+        pass
