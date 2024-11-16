@@ -18,7 +18,7 @@ class UserManager(UserBase):
         data = json.loads(request)
         users = self.storage.get_data()
         
-        if len(data["names"]) > 64 or len(data["display_name"]) > 64:
+        if len(data["name"]) > 64 or len(data["display_name"]) > 64:
             raise ValueError("name or display name should not be greater than 64 characters")
         if any(user["name"] == data["name"] for user in users.values()):
             raise ValueError("user name must be unique")
