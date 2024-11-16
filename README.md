@@ -193,7 +193,7 @@ The following methods are implemented:
 }
 ```
 
-### File structure
+## Project File Structure
 ├── db/
 │   ├── users.json         # Persistent storage for user data
 │   ├── teams.json         # Persistent storage for team data
