@@ -72,30 +72,43 @@ class TeamManager(TeamBase):
         self.storage.update_data(teams)
         return json.dumps({'status': "success"})
     
-    def add_users_to_team(self, request: str):
-        data = json.loads(request)
+    def add_users_to_team(self, request: dict):
         teams = self.storage.get_data()
-        
-        team = teams.get(data["id"])
+        team_id = request.get("id")
+        new_users = request.get("users", [])
+
+        if not team_id or not new_users:
+            raise ValueError("Both 'id' and 'users' fields are required.")
+
+        team = teams.get(team_id)
         if not team:
-            raise ValueError("team not found")
-        if len(data["users"]) + len(team["users"]) > 50:
-            raise ValueError("can not exceed 50 users in a team")
-        
-        team["users"].extend(data["users"])
-        team["users"] = list(set(team["users"]))
+            raise ValueError("Team not found.")
+
+        current_users = team.get("users", [])
+        if len(current_users) + len(new_users) > 50:
+            raise ValueError("Cannot exceed 50 users in a team.")
+
+        team["users"] = list(set(current_users + new_users))
         self.storage.update_data(teams)
+        return "user added succesfully"
         
     def remove_users_from_team(self, request):
-        data = json.loads(request)
         teams = self.storage.get_data()
-        
-        team = teams.get(data["id"])
+        team_id = request.get("id")
+        users_to_remove = request.get("users", [])
+
+        if not team_id or not users_to_remove:
+            raise ValueError("Both 'id' and 'users' fields are required.")
+
+        team = teams.get(team_id)
         if not team:
-            raise ValueError("Team not found")
-        
-        team["users"] = [user for user in team["users"] if user not in data["users"]]
+            raise ValueError("Team not found.")
+
+        current_users = team.get("users", [])
+        team["users"] = [user for user in current_users if user not in users_to_remove]
         self.storage.update_data(teams)
+
+        return "Users removed successfully."
         
     def list_team_users(self, request: str):
         data = json.loads(request)

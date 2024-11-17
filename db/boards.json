@@ -1,1 +1,18 @@
-{}
+{
+    "f0f6d91e-57c7-4fb6-a36e-a0aab87b3725": {
+        "id": "f0f6d91e-57c7-4fb6-a36e-a0aab87b3725",
+        "name": "project_board",
+        "description": "",
+        "creation_time": "2024-11-17T12:45:55.792115",
+        "tasks": [
+            {
+                "board_id": "board_001",
+                "title": "New Task",
+                "description": "Task description",
+                "assignee": "user_001",
+                "status": "To-Do",
+                "id": "f71be0b7-a4cd-42d4-810c-7e3eb8a641c0"
+            }
+        ]
+    }
+}

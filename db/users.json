@@ -1,1 +1,14 @@
-{}
+{
+    "075c5159-f21c-4682-ac8c-ba52cd9e3dfd": {
+        "id": "075c5159-f21c-4682-ac8c-ba52cd9e3dfd",
+        "name": "john_doe",
+        "display_name": "John Doe",
+        "creation_time": "2024-11-16T21:55:08.829768"
+    },
+    "88378c9e-662e-4b6e-a7b7-e119ee669417": {
+        "id": "88378c9e-662e-4b6e-a7b7-e119ee669417",
+        "name": "test_user",
+        "display_name": "Test User Duplicate",
+        "creation_time": "2024-11-17T13:16:19.067894"
+    }
+}

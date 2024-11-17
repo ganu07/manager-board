@@ -1,1 +1,18 @@
-{}
+{
+    "21ab4faf-44b0-4e3c-a25a-411664281e12": {
+        "id": "21ab4faf-44b0-4e3c-a25a-411664281e12",
+        "name": "project_alpha",
+        "description": "Team for Project Alpha",
+        "creation_time": "2024-11-17T07:39:50.855418",
+        "admin": "user_001",
+        "users": []
+    },
+    "95b820e6-fe5f-49b9-8014-526995583556": {
+        "id": "95b820e6-fe5f-49b9-8014-526995583556",
+        "name": "Test Team",
+        "description": "A team for testing",
+        "creation_time": "2024-11-17T13:16:19.066878",
+        "admin": "user_001",
+        "users": []
+    }
+}

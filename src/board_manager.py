@@ -13,6 +13,7 @@ class BoardManager(BoardBase):
 
     def __init__(self, db_path="db/boards.json"):
         self.storage = SingletonJson(db_path)
+        self.boards = self.storage.get_data()
 
     def create_board(self, request: str) -> str:
         data = json.loads(request)

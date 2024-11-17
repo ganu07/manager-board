@@ -36,6 +36,14 @@ def describe_user(user_id):
     except ValueError as e:
         return jsonify({"error": str(e)}), 404
 
+@app.route('/api/user/get-teams', methods=['POST'])
+def get_user_teams():
+    data = request.get_json()
+    try:
+        response = user_manager.get_user_teams(data)
+        return jsonify({"status": "success", "teams": response}), 200
+    except ValueError as e:
+        return jsonify({"status": "error", "message": str(e)}), 400
 
 # === Team APIs ===
 @app.route("/teams", methods=["POST"])
@@ -62,6 +70,36 @@ def describe_team(team_id):
     except ValueError as e:
         return jsonify({"error": str(e)}), 404
 
+
+# Add Users to Team
+@app.route('/api/team/add-users', methods=['POST'])
+def add_users_to_team():
+    data = request.get_json()
+    try:
+        response = team_manager.add_users_to_team(data)
+        return jsonify({"status": "success", "message": response}), 200
+    except Exception as e:
+        return jsonify({"status": "error", "message": str(e)}), 400
+
+# Remove Users from Team
+@app.route('/api/team/remove-users', methods=['POST'])
+def remove_users_from_team():
+    data = request.get_json()
+    try:
+        response = team_manager.remove_users_from_team(data)
+        return jsonify({"status": "success", "message": response}), 200
+    except Exception as e:
+        return jsonify({"status": "error", "message": str(e)}), 400
+
+# List Users in a Team
+@app.route('/api/team/list-users', methods=['POST'])
+def list_team_users():
+    data = request.get_json()
+    try:
+        response = team_manager.list_team_users(data)
+        return jsonify({"status": "success", "users": response}), 200
+    except Exception as e:
+        return jsonify({"status": "error", "message": str(e)}), 400
 
 # === Board APIs ===
 @app.route("/boards", methods=["POST"])
@@ -127,6 +165,24 @@ def list_tasks(board_id):
         return jsonify(json.loads(response)), 200
     except ValueError as e:
         return jsonify({"error": str(e)}), 404
+
+@app.route('/api/task/create', methods=['POST'])
+def create_task():
+    try:
+        data = request.json
+        response = board_manager.create_task(json.dumps(data))
+        return response, 201
+    except Exception as e:
+        return jsonify({"error": str(e)}), 400
+
+@app.route('/api/board/delete', methods=['DELETE'])
+def delete_board():
+    try:
+        data = request.json
+        response = board_manager.delete_board(json.dumps(data))
+        return response, 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 400 
 
 
 if __name__ == "__main__":

@@ -53,7 +53,6 @@ class UserManager(UserBase):
         if not user:
             raise ValueError("User not found.")
         updated_user = data["user"]
-        updated_user = data["user"]
         if "name" in updated_user:
             raise ValueError("User name cannot be updated")
         if "display_name" in updated_user and len(updated_user["display_name"]) > 64:
@@ -64,4 +63,19 @@ class UserManager(UserBase):
         return json.dumps({"status": "success"})
         
     def get_user_teams(self, request: str) -> str:
-        pass
+        user_id = request.get("id")
+        if not user_id:
+            raise ValueError("User ID must be provided.")
+        teams = self.storage.get_data()
+
+        user_teams = [
+            {
+                "name": team["name"],
+                "description": team["description"],
+                "creation_time": team["creation_time"],
+            }
+            for team in teams.values()
+            if user_id in team.get("users", [])
+        ]
+
+        return user_teams

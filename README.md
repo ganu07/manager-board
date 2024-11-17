@@ -34,7 +34,6 @@ The project follows a modular structure with base abstract classes for each func
     ```bash
     python3 -m venv venv
     source venv/bin/activate    # For macOS/Linux
-    venv\Scripts\activate       # For Windows
     pip install -r requirements.txt
     ```
 
@@ -136,7 +135,7 @@ The following methods are implemented:
 
 - **Create a Task on a Board**:
     ```python
-    create_task({"board_id": "board_001", "title": "New Task", "description": "Task description", "assignee": "user_001"})
+    create_task({"board_id": "board_001", "title": "New Task", "description": "Task description", "assignee": "user_001", "task": {"board_id": "board_001", "title": "New Task", "description": "Task description", "assignee": "user_001", "status": "To-Do"}})
     ```
 
 - **List Tasks in a Board**:
